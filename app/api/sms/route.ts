@@ -42,7 +42,7 @@ Determine if the message is:
 1. LOGGING a new player or adding a note to an existing one
 2. LOOKING UP a player
 
-Respond ONLY with valid JSON in one of these two formats:
+CRITICAL: Respond ONLY with raw JSON. No explanation, no preamble, no markdown, no code blocks. Your entire response must be parseable by JSON.parse(). If you are unsure, default to the log action.
 
 For logging:
 {
@@ -70,7 +70,15 @@ For lookup:
     })
   }
 
-  const parsed = JSON.parse(content.text)
+  let parsed
+  try {
+    const cleaned = content.text.replace(/```json|```/g, '').trim()
+    parsed = JSON.parse(cleaned)
+  } catch (e) {
+    return new NextResponse('<?xml version="1.0" encoding="UTF-8"?><Response><Message>Sorry, something went wrong. Try again.</Message></Response>', {
+      headers: { 'Content-Type': 'text/xml' }
+    })
+  }
 
   if (parsed.action === 'log') {
     const { data: existing } = await supabase
