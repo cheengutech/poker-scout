@@ -2,7 +2,9 @@
   "permissions": {
     "allow": [
       "Bash(npx next:*)",
-      "Bash(ls \"C:/Users/Brian/poker-scout/poker-scout/.env\"*)"
+      "Bash(ls \"C:/Users/Brian/poker-scout/poker-scout/.env\"*)",
+      "Bash(npx --yes sharp-cli -i \"C:/Users/Brian/poker-scout/poker-scout/public/mascot.png\" -o \"C:/Users/Brian/poker-scout/poker-scout/app/icon.png\" resize 256 256)",
+      "Bash(npx sharp-cli:*)"
     ]
   }
 }
