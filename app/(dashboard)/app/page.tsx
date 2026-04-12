@@ -25,6 +25,12 @@ export default function AppDashboard() {
   const [newNote, setNewNote] = useState('')
   const [adding, setAdding] = useState(false)
   const [showMobileDetail, setShowMobileDetail] = useState(false)
+  const [showAddPlayer, setShowAddPlayer] = useState(false)
+  const [newPlayerName, setNewPlayerName] = useState('')
+  const [newPlayerDesc, setNewPlayerDesc] = useState('')
+  const [newPlayerLocation, setNewPlayerLocation] = useState('')
+  const [newPlayerNote, setNewPlayerNote] = useState('')
+  const [savingPlayer, setSavingPlayer] = useState(false)
   const [userEmail, setUserEmail] = useState('')
   const router = useRouter()
 
@@ -61,6 +67,27 @@ export default function AppDashboard() {
     setAdding(false)
     await fetchPlayers()
     setSelected(prev => prev ? { ...prev, notes: updated } : null)
+  }
+
+  async function addPlayer() {
+    if (!newPlayerName.trim() && !newPlayerNote.trim()) return
+    setSavingPlayer(true)
+    const { data: { user } } = await supabase.auth.getUser()
+    await supabase.from('poker_players').insert({
+      name: newPlayerName.trim() || null,
+      description: newPlayerDesc.trim() || null,
+      location: newPlayerLocation.trim() || null,
+      notes: newPlayerNote.trim() ? [newPlayerNote.trim()] : [],
+      logged_by: user?.email ?? 'Unknown',
+      phone: '',
+    })
+    setNewPlayerName('')
+    setNewPlayerDesc('')
+    setNewPlayerLocation('')
+    setNewPlayerNote('')
+    setSavingPlayer(false)
+    setShowAddPlayer(false)
+    await fetchPlayers()
   }
 
   function selectPlayer(player: Player) {
@@ -139,6 +166,16 @@ export default function AppDashboard() {
                 {loggers.map(l => <option key={l} value={l}>{l === 'all' ? 'All loggers' : l}</option>)}
               </select>
             </div>
+          </div>
+
+          {/* Add player button */}
+          <div className="px-4 py-3 border-b border-[#1a3a1a]">
+            <button
+              onClick={() => setShowAddPlayer(true)}
+              className="w-full bg-[#2a5a2a] border border-[#3a7a3a] rounded py-2 text-sm text-[#7ab87a] tracking-wide hover:bg-[#3a6a3a] transition-colors"
+            >
+              + Add player
+            </button>
           </div>
 
           {/* Player list */}
@@ -246,6 +283,79 @@ export default function AppDashboard() {
           )}
         </div>
       </div>
+
+      {/* Add player modal */}
+      {showAddPlayer && (
+        <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 px-4">
+          <div className="bg-[#0a0f0a] border border-[#2a4a2a] rounded-lg w-full max-w-md p-6">
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-base text-[#7ab87a] tracking-wider uppercase">Add player</h2>
+              <button
+                onClick={() => setShowAddPlayer(false)}
+                className="text-[#4a6a4a] hover:text-[#7ab87a] text-lg transition-colors"
+              >
+                &times;
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-xs text-[#4a6a4a] uppercase tracking-wider mb-1.5">Name</label>
+                <input
+                  value={newPlayerName}
+                  onChange={e => setNewPlayerName(e.target.value)}
+                  placeholder="Player name"
+                  className="w-full bg-[#111811] border border-[#2a4a2a] rounded px-3 py-2 text-sm text-[#e8e0d0] focus:border-[#3a7a3a] outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-[#4a6a4a] uppercase tracking-wider mb-1.5">Description</label>
+                <input
+                  value={newPlayerDesc}
+                  onChange={e => setNewPlayerDesc(e.target.value)}
+                  placeholder="Physical description, table image, etc."
+                  className="w-full bg-[#111811] border border-[#2a4a2a] rounded px-3 py-2 text-sm text-[#e8e0d0] focus:border-[#3a7a3a] outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-[#4a6a4a] uppercase tracking-wider mb-1.5">Location</label>
+                <input
+                  value={newPlayerLocation}
+                  onChange={e => setNewPlayerLocation(e.target.value)}
+                  placeholder="Card room or casino"
+                  className="w-full bg-[#111811] border border-[#2a4a2a] rounded px-3 py-2 text-sm text-[#e8e0d0] focus:border-[#3a7a3a] outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-xs text-[#4a6a4a] uppercase tracking-wider mb-1.5">First note</label>
+                <textarea
+                  value={newPlayerNote}
+                  onChange={e => setNewPlayerNote(e.target.value)}
+                  placeholder="Initial observation..."
+                  rows={3}
+                  className="w-full bg-[#111811] border border-[#2a4a2a] rounded px-3 py-2.5 text-sm text-[#e8e0d0] resize-y outline-none focus:border-[#3a7a3a]"
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-3 mt-6">
+              <button
+                onClick={() => setShowAddPlayer(false)}
+                className="flex-1 border border-[#2a4a2a] rounded py-2 text-sm text-[#4a6a4a] hover:text-[#6a8a6a] hover:border-[#3a6a3a] transition-colors"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={addPlayer}
+                disabled={savingPlayer || (!newPlayerName.trim() && !newPlayerNote.trim())}
+                className="flex-1 bg-[#2a5a2a] border border-[#3a7a3a] rounded py-2 text-sm text-[#7ab87a] tracking-wide hover:bg-[#3a6a3a] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {savingPlayer ? 'Saving...' : 'Save player'}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
