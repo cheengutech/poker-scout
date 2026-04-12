@@ -22,10 +22,10 @@ const AGGRESSION_LEVELS = ['Passive', 'Moderate', 'Aggressive', 'Maniac']
 const ETHNICITY_OPTIONS = ['Asian', 'Black', 'Hispanic', 'White', 'Middle Eastern', 'Other']
 
 const AGGRESSION_COLORS: Record<string, string> = {
-  Passive: 'bg-blue-100 text-blue-700',
-  Moderate: 'bg-amber-100 text-amber-700',
-  Aggressive: 'bg-orange-100 text-orange-700',
-  Maniac: 'bg-red-100 text-red-700',
+  Passive: 'bg-blue-900/40 text-blue-300 border border-blue-800/30',
+  Moderate: 'bg-amber-900/40 text-amber-300 border border-amber-800/30',
+  Aggressive: 'bg-orange-900/40 text-orange-300 border border-orange-800/30',
+  Maniac: 'bg-red-900/40 text-red-300 border border-red-800/30',
 }
 
 const supabase = createClient()
