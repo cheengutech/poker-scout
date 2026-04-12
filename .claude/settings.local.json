@@ -4,7 +4,12 @@
       "Bash(npx next:*)",
       "Bash(ls \"C:/Users/Brian/poker-scout/poker-scout/.env\"*)",
       "Bash(npx --yes sharp-cli -i \"C:/Users/Brian/poker-scout/poker-scout/public/mascot.png\" -o \"C:/Users/Brian/poker-scout/poker-scout/app/icon.png\" resize 256 256)",
-      "Bash(npx sharp-cli:*)"
+      "Bash(npx sharp-cli:*)",
+      "Bash(node -e \"const sharp = require\\('sharp'\\); sharp\\('public/mascot.png'\\).metadata\\(\\).then\\(m => console.log\\(m\\)\\)\")",
+      "Bash(node -e ':*)",
+      "Bash(cp mascot.png mascot-original.png)",
+      "Bash(cp mascot-clean.png mascot.png)",
+      "Bash(rm mascot-transparent.png mascot-clean.png)"
     ]
   }
 }
