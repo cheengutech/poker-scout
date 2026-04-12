@@ -22,10 +22,10 @@ const AGGRESSION_LEVELS = ['Passive', 'Moderate', 'Aggressive', 'Maniac']
 const ETHNICITY_OPTIONS = ['Asian', 'Black', 'Hispanic', 'White', 'Middle Eastern', 'Other']
 
 const AGGRESSION_COLORS: Record<string, string> = {
-  Passive: 'bg-blue-900/40 text-blue-300 border border-blue-800/30',
-  Moderate: 'bg-amber-900/40 text-amber-300 border border-amber-800/30',
-  Aggressive: 'bg-orange-900/40 text-orange-300 border border-orange-800/30',
-  Maniac: 'bg-red-900/40 text-red-300 border border-red-800/30',
+  Passive: 'bg-blue-50 text-blue-600 border border-blue-100',
+  Moderate: 'bg-amber-50 text-amber-600 border border-amber-100',
+  Aggressive: 'bg-orange-50 text-orange-600 border border-orange-100',
+  Maniac: 'bg-red-50 text-red-600 border border-red-100',
 }
 
 const supabase = createClient()
@@ -245,14 +245,14 @@ export default function AppDashboard() {
           <div className="w-px h-5 bg-gray-200 hidden md:block" />
           <div className="flex items-center gap-2">
             <div className="hidden md:flex items-center gap-2">
-              <div className="w-7 h-7 rounded-full bg-emerald-100 flex items-center justify-center">
+              <div className="w-7 h-7 rounded-full bg-emerald-50 flex items-center justify-center border border-emerald-100">
                 <span className="text-xs text-emerald-700 font-semibold">{userEmail.charAt(0).toUpperCase()}</span>
               </div>
               <span className="text-xs text-gray-500 max-w-[120px] truncate">{userEmail}</span>
             </div>
             <button
               onClick={handleSignOut}
-              className="text-xs text-gray-400 hover:text-gray-600 bg-gray-100 hover:bg-gray-200 px-3 py-1.5 rounded-lg transition-all"
+              className="text-xs text-gray-400 hover:text-gray-600 bg-gray-50 hover:bg-gray-100 border border-gray-200 px-3 py-1.5 rounded-lg transition-all"
             >
               Sign out
             </button>
@@ -334,13 +334,12 @@ export default function AppDashboard() {
                 }`}
               >
                 <div className="flex items-center gap-3">
-                  {/* Avatar / Photo */}
                   {player.photo_url ? (
                     <img src={player.photo_url} alt="" className="w-10 h-10 rounded-full object-cover shrink-0" />
                   ) : (
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center shrink-0 text-sm font-semibold ${
                       selected?.id === player.id
-                        ? 'bg-emerald-200 text-emerald-800'
+                        ? 'bg-emerald-100 text-emerald-700 border border-emerald-200'
                         : 'bg-gray-100 text-gray-400 group-hover:bg-gray-200'
                     }`}>
                       {(player.name?.charAt(0) ?? '?').toUpperCase()}
@@ -382,8 +381,8 @@ export default function AppDashboard() {
         <div className={`flex-1 overflow-y-auto custom-scroll ${showMobileDetail ? 'block' : 'hidden md:block'}`}>
           {!selected ? (
             <div className="flex flex-col items-center justify-center h-full text-center px-8">
-              <div className="w-16 h-16 rounded-2xl bg-gray-100 flex items-center justify-center mb-4">
-                <svg className="w-7 h-7 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-16 h-16 rounded-2xl bg-emerald-50 flex items-center justify-center mb-4 border border-emerald-100">
+                <svg className="w-7 h-7 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                 </svg>
@@ -412,8 +411,8 @@ export default function AppDashboard() {
                     {selected.photo_url ? (
                       <img src={selected.photo_url} alt="" className="w-20 h-20 rounded-2xl object-cover" />
                     ) : (
-                      <div className="w-20 h-20 rounded-2xl bg-gray-100 flex items-center justify-center">
-                        <span className="text-2xl text-gray-300 font-semibold">
+                      <div className="w-20 h-20 rounded-2xl bg-emerald-50 flex items-center justify-center border border-emerald-100">
+                        <span className="text-2xl text-emerald-300 font-semibold">
                           {(selected.name?.charAt(0) ?? '?').toUpperCase()}
                         </span>
                       </div>
@@ -452,15 +451,15 @@ export default function AppDashboard() {
                         </span>
                       )}
                       {selected.location && (
-                        <span className="text-xs text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full">{selected.location}</span>
+                        <span className="text-xs text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full border border-gray-200">{selected.location}</span>
                       )}
                       {selected.ethnicity && (
-                        <span className="text-xs text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full">{selected.ethnicity}</span>
+                        <span className="text-xs text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full border border-gray-200">{selected.ethnicity}</span>
                       )}
                       <span className="text-xs text-gray-400 bg-gray-50 px-2.5 py-1 rounded-full">{timeAgo(selected.updated_at)}</span>
                       <button
                         onClick={sharePlayer}
-                        className="text-xs font-medium px-2.5 py-1 rounded-full transition-colors flex items-center gap-1 bg-gray-100 text-gray-500 hover:bg-emerald-50 hover:text-emerald-600"
+                        className="text-xs font-medium px-2.5 py-1 rounded-full transition-colors flex items-center gap-1 bg-emerald-50 text-emerald-600 border border-emerald-100 hover:bg-emerald-100 hover:text-emerald-700"
                       >
                         <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
@@ -474,7 +473,7 @@ export default function AppDashboard() {
 
               {/* Profile fields */}
               <div className="bg-white rounded-2xl border border-gray-200 shadow-sm mb-6 divide-y divide-gray-100">
-                <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider px-6 pt-5 pb-3">Profile</h3>
+                <h3 className="text-xs font-semibold text-emerald-600/60 uppercase tracking-wider px-6 pt-5 pb-3">Profile</h3>
 
                 {/* Aggression */}
                 <div className="px-6 py-3.5 flex items-center justify-between">
@@ -537,7 +536,7 @@ export default function AppDashboard() {
                         value={editLastHand}
                         onChange={e => setEditLastHand(e.target.value)}
                         placeholder="e.g. Lost with AA vs KK"
-                        className="bg-gray-50 border border-gray-200 rounded-lg px-2 py-1 text-sm text-gray-900 outline-none focus:border-emerald-500 w-48"
+                        className="bg-gray-50 border border-gray-200 rounded-lg px-2 py-1 text-sm text-gray-900 outline-none focus:border-emerald-500 w-48 placeholder:text-gray-300"
                       />
                       <button onClick={() => updatePlayerField('last_hand', editLastHand.trim() || null)} className="text-xs text-emerald-600 font-medium hover:underline">Save</button>
                       <button onClick={() => setEditingField(null)} className="text-xs text-gray-400 hover:underline">Cancel</button>
@@ -560,7 +559,7 @@ export default function AppDashboard() {
               {/* Notes */}
               <div className="bg-white rounded-2xl border border-gray-200 shadow-sm mb-6">
                 <div className="px-6 pt-5 pb-3 flex items-center justify-between">
-                  <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Notes</h3>
+                  <h3 className="text-xs font-semibold text-emerald-600/60 uppercase tracking-wider">Notes</h3>
                   <span className="text-xs text-gray-300">{selected.notes?.length || 0} total</span>
                 </div>
 
@@ -573,9 +572,9 @@ export default function AppDashboard() {
                 ) : (
                   <div className="px-6 pb-4 space-y-2">
                     {selected.notes.map((note, i) => (
-                      <div key={i} className="bg-gray-50 rounded-xl px-4 py-3 text-sm leading-relaxed text-gray-700">
+                      <div key={i} className="bg-gray-50 rounded-xl px-4 py-3 text-sm leading-relaxed text-gray-700 border border-gray-100">
                         <div className="flex items-start gap-2.5">
-                          <span className="inline-flex items-center justify-center w-5 h-5 rounded-md bg-gray-200 text-gray-500 text-[10px] font-bold shrink-0 mt-0.5">{i + 1}</span>
+                          <span className="inline-flex items-center justify-center w-5 h-5 rounded-md bg-emerald-50 text-emerald-600 text-[10px] font-bold shrink-0 mt-0.5 border border-emerald-100">{i + 1}</span>
                           <p className="flex-1">{note}</p>
                         </div>
                       </div>
@@ -585,7 +584,7 @@ export default function AppDashboard() {
 
                 {/* Add note inline */}
                 <div className="px-6 pb-5">
-                  <div className="bg-gray-50 rounded-xl p-3">
+                  <div className="bg-gray-50 rounded-xl p-3 border border-gray-100">
                     <textarea
                       value={newNote}
                       onChange={e => setNewNote(e.target.value)}
@@ -621,7 +620,7 @@ export default function AppDashboard() {
       {/* Add player modal */}
       {showAddPlayer && (
         <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-start md:items-center justify-center z-50 px-4 pt-16 md:pt-0" onClick={() => setShowAddPlayer(false)}>
-          <div className="bg-white rounded-2xl w-full max-w-md shadow-xl max-h-[85vh] overflow-y-auto" onClick={e => e.stopPropagation()}>
+          <div className="bg-white rounded-2xl w-full max-w-md shadow-xl max-h-[85vh] overflow-y-auto border border-gray-200" onClick={e => e.stopPropagation()}>
             {/* Modal header */}
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100 sticky top-0 bg-white rounded-t-2xl z-10">
               <h2 className="text-base font-semibold text-gray-900">Add new player</h2>
@@ -644,8 +643,8 @@ export default function AppDashboard() {
                   {newPlayerPhotoPreview ? (
                     <img src={newPlayerPhotoPreview} alt="" className="w-16 h-16 rounded-xl object-cover" />
                   ) : (
-                    <div className="w-16 h-16 rounded-xl bg-gray-100 flex items-center justify-center">
-                      <svg className="w-6 h-6 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="w-16 h-16 rounded-xl bg-emerald-50 flex items-center justify-center border border-emerald-100">
+                      <svg className="w-6 h-6 text-emerald-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                       </svg>
                     </div>
@@ -654,7 +653,7 @@ export default function AppDashboard() {
                     <button
                       type="button"
                       onClick={() => photoInputRef.current?.click()}
-                      className="text-xs font-medium text-emerald-600 bg-emerald-50 hover:bg-emerald-100 px-3 py-2 rounded-lg transition-colors"
+                      className="text-xs font-medium text-emerald-600 bg-emerald-50 hover:bg-emerald-100 px-3 py-2 rounded-lg transition-colors border border-emerald-100"
                     >
                       Upload photo
                     </button>
@@ -667,7 +666,7 @@ export default function AppDashboard() {
                           photoInputRef.current.removeAttribute('capture')
                         }
                       }}
-                      className="text-xs font-medium text-gray-600 bg-gray-100 hover:bg-gray-200 px-3 py-2 rounded-lg transition-colors"
+                      className="text-xs font-medium text-gray-600 bg-gray-50 hover:bg-gray-100 px-3 py-2 rounded-lg transition-colors border border-gray-200"
                     >
                       Take photo
                     </button>
@@ -758,7 +757,7 @@ export default function AppDashboard() {
             <div className="flex gap-3 px-6 py-4 border-t border-gray-100 sticky bottom-0 bg-white rounded-b-2xl">
               <button
                 onClick={() => setShowAddPlayer(false)}
-                className="flex-1 bg-gray-100 hover:bg-gray-200 rounded-lg py-2.5 text-sm text-gray-600 font-medium transition-colors"
+                className="flex-1 bg-gray-50 hover:bg-gray-100 rounded-lg py-2.5 text-sm text-gray-600 font-medium transition-colors border border-gray-200"
               >
                 Cancel
               </button>

@@ -1,5 +1,6 @@
 import { createClient } from '@supabase/supabase-js'
 import { notFound } from 'next/navigation'
+import Image from 'next/image'
 
 type Player = {
   id: string
@@ -16,10 +17,10 @@ type Player = {
 }
 
 const AGGRESSION_COLORS: Record<string, string> = {
-  Passive: 'bg-blue-100 text-blue-700',
-  Moderate: 'bg-amber-100 text-amber-700',
-  Aggressive: 'bg-orange-100 text-orange-700',
-  Maniac: 'bg-red-100 text-red-700',
+  Passive: 'bg-blue-50 text-blue-600 border border-blue-100',
+  Moderate: 'bg-amber-50 text-amber-600 border border-amber-100',
+  Aggressive: 'bg-orange-50 text-orange-600 border border-orange-100',
+  Maniac: 'bg-red-50 text-red-600 border border-red-100',
 }
 
 function timeAgo(dateStr: string) {
@@ -52,13 +53,11 @@ export default async function SharedPlayerPage({ params }: { params: Promise<{ i
   const p = player as Player
 
   return (
-    <div className="min-h-screen bg-gray-50 text-gray-900">
+    <div className="min-h-screen bg-white text-gray-900">
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 px-4 md:px-6 py-3 flex items-center justify-between">
+      <header className="border-b border-gray-200 px-4 md:px-6 py-3 flex items-center justify-between">
         <div className="flex items-center gap-2.5">
-          <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center">
-            <span className="text-white text-xs font-bold">PS</span>
-          </div>
+          <Image src="/mascot.png" alt="Poker Scout" width={32} height={32} className="w-8 h-8 object-contain" />
           <div>
             <h1 className="text-base font-semibold text-gray-900 leading-none">Poker Scout</h1>
             <p className="text-[10px] text-gray-400 mt-0.5">shared player notes</p>
@@ -66,7 +65,7 @@ export default async function SharedPlayerPage({ params }: { params: Promise<{ i
         </div>
         <a
           href="/signup"
-          className="text-xs text-emerald-600 hover:text-emerald-700 font-medium bg-emerald-50 hover:bg-emerald-100 px-3 py-1.5 rounded-lg transition-all"
+          className="text-xs text-emerald-600 hover:text-emerald-700 font-medium bg-emerald-50 hover:bg-emerald-100 px-3 py-1.5 rounded-lg transition-all border border-emerald-100"
         >
           Sign up free
         </a>
@@ -79,8 +78,8 @@ export default async function SharedPlayerPage({ params }: { params: Promise<{ i
             {p.photo_url ? (
               <img src={p.photo_url} alt="" className="w-20 h-20 rounded-2xl object-cover" />
             ) : (
-              <div className="w-20 h-20 rounded-2xl bg-gray-100 flex items-center justify-center">
-                <span className="text-2xl text-gray-300 font-semibold">
+              <div className="w-20 h-20 rounded-2xl bg-emerald-50 flex items-center justify-center border border-emerald-100">
+                <span className="text-2xl text-emerald-300 font-semibold">
                   {(p.name?.charAt(0) ?? '?').toUpperCase()}
                 </span>
               </div>
@@ -99,10 +98,10 @@ export default async function SharedPlayerPage({ params }: { params: Promise<{ i
                   </span>
                 )}
                 {p.location && (
-                  <span className="text-xs text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full">{p.location}</span>
+                  <span className="text-xs text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full border border-gray-200">{p.location}</span>
                 )}
                 {p.ethnicity && (
-                  <span className="text-xs text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full">{p.ethnicity}</span>
+                  <span className="text-xs text-gray-500 bg-gray-100 px-2.5 py-1 rounded-full border border-gray-200">{p.ethnicity}</span>
                 )}
                 <span className="text-xs text-gray-400 bg-gray-50 px-2.5 py-1 rounded-full">Updated {timeAgo(p.updated_at)}</span>
               </div>
@@ -112,7 +111,7 @@ export default async function SharedPlayerPage({ params }: { params: Promise<{ i
 
         {/* Profile fields */}
         <div className="bg-white rounded-2xl border border-gray-200 shadow-sm mb-6 divide-y divide-gray-100">
-          <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider px-6 pt-5 pb-3">Profile</h3>
+          <h3 className="text-xs font-semibold text-emerald-600/60 uppercase tracking-wider px-6 pt-5 pb-3">Profile</h3>
           {p.aggression && (
             <div className="px-6 py-3.5 flex items-center justify-between">
               <span className="text-sm text-gray-500">Aggression</span>
@@ -140,7 +139,7 @@ export default async function SharedPlayerPage({ params }: { params: Promise<{ i
         {/* Notes */}
         <div className="bg-white rounded-2xl border border-gray-200 shadow-sm mb-6">
           <div className="px-6 pt-5 pb-3 flex items-center justify-between">
-            <h3 className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Notes</h3>
+            <h3 className="text-xs font-semibold text-emerald-600/60 uppercase tracking-wider">Notes</h3>
             <span className="text-xs text-gray-300">{p.notes?.length || 0} total</span>
           </div>
 
@@ -153,9 +152,9 @@ export default async function SharedPlayerPage({ params }: { params: Promise<{ i
           ) : (
             <div className="px-6 pb-6 space-y-2">
               {p.notes.map((note, i) => (
-                <div key={i} className="bg-gray-50 rounded-xl px-4 py-3 text-sm leading-relaxed text-gray-700">
+                <div key={i} className="bg-gray-50 rounded-xl px-4 py-3 text-sm leading-relaxed text-gray-700 border border-gray-100">
                   <div className="flex items-start gap-2.5">
-                    <span className="inline-flex items-center justify-center w-5 h-5 rounded-md bg-gray-200 text-gray-500 text-[10px] font-bold shrink-0 mt-0.5">{i + 1}</span>
+                    <span className="inline-flex items-center justify-center w-5 h-5 rounded-md bg-emerald-50 text-emerald-600 text-[10px] font-bold shrink-0 mt-0.5 border border-emerald-100">{i + 1}</span>
                     <p className="flex-1">{note}</p>
                   </div>
                 </div>

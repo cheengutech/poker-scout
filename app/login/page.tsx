@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase-browser'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
 export default function LoginPage() {
@@ -31,13 +32,11 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-6">
+    <div className="min-h-screen bg-white flex items-center justify-center px-6">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <Link href="/" className="inline-flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center">
-              <span className="text-white text-xs font-bold">PS</span>
-            </div>
+          <Link href="/" className="inline-flex flex-col items-center gap-3">
+            <Image src="/mascot.png" alt="Poker Scout" width={64} height={64} className="w-16 h-16 object-contain drop-shadow-md" />
             <span className="text-gray-900 text-lg font-semibold tracking-tight">Poker Scout</span>
           </Link>
           <p className="text-gray-400 text-sm mt-3">Sign in to your account</p>
