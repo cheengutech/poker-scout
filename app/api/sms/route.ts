@@ -2,21 +2,28 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@supabase/supabase-js'
 import Anthropic from '@anthropic-ai/sdk'
 
-const supabase = createClient(
-  process.env.SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-)
+function getSupabase() {
+  return createClient(
+    process.env.SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY!
+  )
+}
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY!
-})
+function getAnthropic() {
+  return new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! })
+}
 
-const USERS: Record<string, string> = {
-  [process.env.AUDREY_PHONE!]: 'Audrey',
-  [process.env.LUKA_PHONE!]: 'Luka'
+function getUsers(): Record<string, string> {
+  return {
+    [process.env.AUDREY_PHONE!]: 'Audrey',
+    [process.env.LUKA_PHONE!]: 'Luka',
+  }
 }
 
 export async function POST(req: NextRequest) {
+  const supabase = getSupabase()
+  const anthropic = getAnthropic()
+  const USERS = getUsers()
   const formData = await req.formData()
   const body = Object.fromEntries(formData.entries())
 
