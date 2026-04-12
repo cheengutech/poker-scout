@@ -34,80 +34,90 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0f0a] text-[#e8e0d0] flex items-center justify-center px-6">
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-6">
       <div className="w-full max-w-sm">
         <div className="text-center mb-8">
-          <Link href="/" className="text-[#7ab87a] text-lg tracking-[3px] uppercase font-light">
-            Poker Scout
+          <Link href="/" className="inline-flex items-center gap-2">
+            <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center">
+              <span className="text-white text-xs font-bold">PS</span>
+            </div>
+            <span className="text-gray-900 text-lg font-semibold tracking-tight">Poker Scout</span>
           </Link>
-          <p className="text-[#4a6a4a] text-sm mt-2">Create your account</p>
+          <p className="text-gray-400 text-sm mt-3">Create your account</p>
         </div>
 
-        {success ? (
-          <div className="bg-[#111811] border border-[#2a4a2a] rounded p-6 text-center">
-            <h2 className="text-[#7ab87a] text-base mb-2">Check your email</h2>
-            <p className="text-sm text-[#6a8a6a]">
-              We sent a confirmation link to <strong className="text-[#e8e0d0]">{email}</strong>. Click it to activate your account.
-            </p>
-          </div>
-        ) : (
-          <form onSubmit={handleSignup} className="space-y-4">
-            {error && (
-              <div className="bg-red-900/20 border border-red-800/50 text-red-400 text-sm px-4 py-3 rounded">
-                {error}
+        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
+          {success ? (
+            <div className="text-center py-4">
+              <div className="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center mx-auto mb-3">
+                <svg className="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
               </div>
-            )}
-
-            <div>
-              <label htmlFor="email" className="block text-xs text-[#4a6a4a] uppercase tracking-wider mb-2">
-                Email
-              </label>
-              <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={e => setEmail(e.target.value)}
-                required
-                className="w-full bg-[#111811] border border-[#2a4a2a] rounded px-3 py-2.5 text-sm text-[#e8e0d0] focus:border-[#3a7a3a] outline-none transition-colors"
-                placeholder="you@example.com"
-              />
+              <h2 className="text-gray-900 text-base font-semibold mb-1">Check your email</h2>
+              <p className="text-sm text-gray-500">
+                We sent a confirmation link to <strong className="text-gray-900">{email}</strong>.
+              </p>
             </div>
+          ) : (
+            <form onSubmit={handleSignup} className="space-y-4">
+              {error && (
+                <div className="bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-lg">
+                  {error}
+                </div>
+              )}
 
-            <div>
-              <label htmlFor="password" className="block text-xs text-[#4a6a4a] uppercase tracking-wider mb-2">
-                Password
-              </label>
-              <input
-                id="password"
-                type="password"
-                value={password}
-                onChange={e => setPassword(e.target.value)}
-                required
-                minLength={6}
-                className="w-full bg-[#111811] border border-[#2a4a2a] rounded px-3 py-2.5 text-sm text-[#e8e0d0] focus:border-[#3a7a3a] outline-none transition-colors"
-                placeholder="Min. 6 characters"
-              />
-            </div>
+              <div>
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1.5">
+                  Email
+                </label>
+                <input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={e => setEmail(e.target.value)}
+                  required
+                  className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-300 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all"
+                  placeholder="you@example.com"
+                />
+              </div>
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full bg-[#2a5a2a] border border-[#3a7a3a] text-[#7ab87a] py-2.5 rounded text-sm hover:bg-[#3a6a3a] transition-colors tracking-wide disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              {loading ? 'Creating account...' : 'Create account'}
-            </button>
+              <div>
+                <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1.5">
+                  Password
+                </label>
+                <input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={e => setPassword(e.target.value)}
+                  required
+                  minLength={6}
+                  className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-300 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all"
+                  placeholder="Min. 6 characters"
+                />
+              </div>
 
-            <p className="text-xs text-[#3a5a3a] text-center">
-              By signing up, you agree to our{' '}
-              <Link href="/terms" className="text-[#6a8a6a] hover:underline">Terms</Link> and{' '}
-              <Link href="/privacy" className="text-[#6a8a6a] hover:underline">Privacy Policy</Link>.
-            </p>
-          </form>
-        )}
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full bg-emerald-600 text-white py-2.5 rounded-lg text-sm font-medium hover:bg-emerald-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {loading ? 'Creating account...' : 'Create account'}
+              </button>
 
-        <p className="text-center text-sm text-[#4a6a4a] mt-6">
+              <p className="text-xs text-gray-400 text-center">
+                By signing up, you agree to our{' '}
+                <Link href="/terms" className="text-emerald-600 hover:underline">Terms</Link> and{' '}
+                <Link href="/privacy" className="text-emerald-600 hover:underline">Privacy Policy</Link>.
+              </p>
+            </form>
+          )}
+        </div>
+
+        <p className="text-center text-sm text-gray-400 mt-6">
           Already have an account?{' '}
-          <Link href="/login" className="text-[#7ab87a] hover:underline">Sign in</Link>
+          <Link href="/login" className="text-emerald-600 font-medium hover:underline">Sign in</Link>
         </p>
       </div>
     </div>

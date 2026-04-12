@@ -2,19 +2,22 @@ import Link from 'next/link'
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-[#0a0f0a] text-[#e8e0d0]">
+    <div className="min-h-screen bg-white text-gray-900">
       {/* Nav */}
-      <nav className="border-b border-[#1a3a1a] px-6 py-4 flex items-center justify-between max-w-5xl mx-auto w-full">
-        <div>
-          <span className="text-[#7ab87a] text-lg tracking-[3px] uppercase font-light">Poker Scout</span>
+      <nav className="border-b border-gray-100 px-6 py-4 flex items-center justify-between max-w-5xl mx-auto w-full">
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center">
+            <span className="text-white text-xs font-bold">PS</span>
+          </div>
+          <span className="text-gray-900 text-lg font-semibold tracking-tight">Poker Scout</span>
         </div>
-        <div className="flex items-center gap-4">
-          <Link href="/login" className="text-sm text-[#6a8a6a] hover:text-[#7ab87a] transition-colors">
+        <div className="flex items-center gap-3">
+          <Link href="/login" className="text-sm text-gray-500 hover:text-gray-900 transition-colors px-3 py-2">
             Log in
           </Link>
           <Link
             href="/signup"
-            className="text-sm bg-[#2a5a2a] border border-[#3a7a3a] text-[#7ab87a] px-4 py-2 rounded hover:bg-[#3a6a3a] transition-colors"
+            className="text-sm bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors font-medium"
           >
             Sign up
           </Link>
@@ -23,22 +26,26 @@ export default function LandingPage() {
 
       {/* Hero */}
       <section className="px-6 py-20 md:py-32 max-w-3xl mx-auto text-center">
-        <h1 className="text-3xl md:text-5xl font-light text-[#7ab87a] tracking-wide mb-6 leading-tight">
+        <div className="inline-flex items-center gap-2 bg-emerald-50 text-emerald-700 text-xs font-medium px-3 py-1.5 rounded-full mb-6">
+          <div className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+          SMS-powered player intelligence
+        </div>
+        <h1 className="text-4xl md:text-6xl font-bold text-gray-900 tracking-tight mb-6 leading-[1.1]">
           Your villain database,<br />one text away.
         </h1>
-        <p className="text-base md:text-lg text-[#8a9a8a] max-w-xl mx-auto mb-10 leading-relaxed">
-          Poker Scout lets you log and look up player notes by SMS. Text your observations from the table, query your database anytime. Never forget a read again.
+        <p className="text-lg md:text-xl text-gray-500 max-w-xl mx-auto mb-10 leading-relaxed">
+          Log and look up player notes by SMS. Text your observations from the table, query your database anytime. Never forget a read.
         </p>
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
           <Link
             href="/signup"
-            className="w-full sm:w-auto bg-[#2a5a2a] border border-[#3a7a3a] text-[#7ab87a] px-8 py-3 rounded text-base hover:bg-[#3a6a3a] transition-colors tracking-wide"
+            className="w-full sm:w-auto bg-emerald-600 text-white px-8 py-3.5 rounded-xl text-base font-medium hover:bg-emerald-700 transition-colors shadow-lg shadow-emerald-600/20"
           >
             Get started free
           </Link>
           <a
             href="sms:+18442730024"
-            className="w-full sm:w-auto border border-[#2a4a2a] text-[#6a8a6a] px-8 py-3 rounded text-base hover:border-[#3a6a3a] hover:text-[#7ab87a] transition-colors tracking-wide"
+            className="w-full sm:w-auto border border-gray-200 text-gray-600 px-8 py-3.5 rounded-xl text-base font-medium hover:border-gray-300 hover:text-gray-900 transition-colors"
           >
             Text the number
           </a>
@@ -46,84 +53,61 @@ export default function LandingPage() {
       </section>
 
       {/* How it works */}
-      <section className="px-6 py-16 border-t border-[#1a3a1a]">
+      <section className="px-6 py-20 bg-gray-50">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-xs tracking-[3px] text-[#4a6a4a] uppercase text-center mb-12">How it works</h2>
+          <h2 className="text-xs font-semibold tracking-widest text-gray-400 uppercase text-center mb-12">How it works</h2>
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="text-2xl text-[#7ab87a] mb-3 font-light">1</div>
-              <h3 className="text-sm text-[#7ab87a] uppercase tracking-wider mb-2">Text a note</h3>
-              <p className="text-sm text-[#6a8a6a] leading-relaxed">
-                Send an SMS to our number with a player description, table read, or betting pattern.
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl text-[#7ab87a] mb-3 font-light">2</div>
-              <h3 className="text-sm text-[#7ab87a] uppercase tracking-wider mb-2">AI parses it</h3>
-              <p className="text-sm text-[#6a8a6a] leading-relaxed">
-                Our AI understands your message — logs new players, adds notes to existing ones, or looks up your history.
-              </p>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl text-[#7ab87a] mb-3 font-light">3</div>
-              <h3 className="text-sm text-[#7ab87a] uppercase tracking-wider mb-2">Query anytime</h3>
-              <p className="text-sm text-[#6a8a6a] leading-relaxed">
-                Text back to look up a player, or browse your full database from the web dashboard.
-              </p>
-            </div>
+            {[
+              { step: '1', title: 'Text a note', desc: 'Send an SMS with a player description, table read, or betting pattern.' },
+              { step: '2', title: 'AI parses it', desc: 'Our AI logs new players, adds notes to existing ones, or looks up your history.' },
+              { step: '3', title: 'Query anytime', desc: 'Text back to look up a player, or browse your full database on the web.' },
+            ].map(item => (
+              <div key={item.step} className="text-center">
+                <div className="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto mb-4 text-sm font-bold">{item.step}</div>
+                <h3 className="text-sm font-semibold text-gray-900 mb-2">{item.title}</h3>
+                <p className="text-sm text-gray-500 leading-relaxed">{item.desc}</p>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* Features */}
-      <section className="px-6 py-16 border-t border-[#1a3a1a]">
-        <div className="max-w-3xl mx-auto grid md:grid-cols-2 gap-8">
-          <div className="border border-[#1a3a1a] rounded p-6">
-            <h3 className="text-sm text-[#7ab87a] uppercase tracking-wider mb-2">SMS-first</h3>
-            <p className="text-sm text-[#6a8a6a] leading-relaxed">
-              No app to open at the table. Just text. Works on any phone, any carrier.
-            </p>
-          </div>
-          <div className="border border-[#1a3a1a] rounded p-6">
-            <h3 className="text-sm text-[#7ab87a] uppercase tracking-wider mb-2">Web dashboard</h3>
-            <p className="text-sm text-[#6a8a6a] leading-relaxed">
-              Search, filter, and review all your notes from a clean mobile-friendly interface.
-            </p>
-          </div>
-          <div className="border border-[#1a3a1a] rounded p-6">
-            <h3 className="text-sm text-[#7ab87a] uppercase tracking-wider mb-2">AI-powered</h3>
-            <p className="text-sm text-[#6a8a6a] leading-relaxed">
-              Natural language processing means you text like you talk. No rigid formats or commands.
-            </p>
-          </div>
-          <div className="border border-[#1a3a1a] rounded p-6">
-            <h3 className="text-sm text-[#7ab87a] uppercase tracking-wider mb-2">Private & secure</h3>
-            <p className="text-sm text-[#6a8a6a] leading-relaxed">
-              Your notes are encrypted and only visible to you. We never share or sell your data.
-            </p>
-          </div>
+      <section className="px-6 py-20">
+        <div className="max-w-3xl mx-auto grid md:grid-cols-2 gap-4">
+          {[
+            { title: 'SMS-first', desc: 'No app to open at the table. Just text. Works on any phone, any carrier.' },
+            { title: 'Web dashboard', desc: 'Search, filter, and review all your notes from a clean mobile-friendly interface.' },
+            { title: 'AI-powered', desc: 'Natural language processing means you text like you talk. No rigid formats.' },
+            { title: 'Private & secure', desc: 'Your notes are encrypted and only visible to you. We never share your data.' },
+          ].map(f => (
+            <div key={f.title} className="bg-gray-50 rounded-xl p-6 hover:bg-gray-100 transition-colors">
+              <h3 className="text-sm font-semibold text-gray-900 mb-1.5">{f.title}</h3>
+              <p className="text-sm text-gray-500 leading-relaxed">{f.desc}</p>
+            </div>
+          ))}
         </div>
       </section>
 
       {/* CTA */}
-      <section className="px-6 py-20 border-t border-[#1a3a1a] text-center">
-        <h2 className="text-xl md:text-2xl text-[#7ab87a] font-light mb-4">Ready to build your edge?</h2>
-        <p className="text-sm text-[#6a8a6a] mb-8">Start logging player notes today. Free to use.</p>
+      <section className="px-6 py-20 bg-emerald-600 text-center">
+        <h2 className="text-2xl md:text-3xl text-white font-bold mb-3">Ready to build your edge?</h2>
+        <p className="text-emerald-100 mb-8">Start logging player notes today. Free to use.</p>
         <Link
           href="/signup"
-          className="bg-[#2a5a2a] border border-[#3a7a3a] text-[#7ab87a] px-8 py-3 rounded text-base hover:bg-[#3a6a3a] transition-colors tracking-wide"
+          className="bg-white text-emerald-700 px-8 py-3.5 rounded-xl text-base font-medium hover:bg-emerald-50 transition-colors shadow-lg shadow-black/10"
         >
           Create your account
         </Link>
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-[#1a3a1a] px-6 py-8">
-        <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#3a5a3a]">
+      <footer className="border-t border-gray-100 px-6 py-8">
+        <div className="max-w-3xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-400">
           <span>&copy; {new Date().getFullYear()} Poker Scout. All rights reserved.</span>
           <div className="flex gap-6">
-            <Link href="/terms" className="hover:text-[#6a8a6a] transition-colors">Terms of Service</Link>
-            <Link href="/privacy" className="hover:text-[#6a8a6a] transition-colors">Privacy Policy</Link>
+            <Link href="/terms" className="hover:text-gray-600 transition-colors">Terms of Service</Link>
+            <Link href="/privacy" className="hover:text-gray-600 transition-colors">Privacy Policy</Link>
           </div>
         </div>
       </footer>
