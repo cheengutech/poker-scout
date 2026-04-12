@@ -13,11 +13,26 @@ function getAnthropic() {
   return new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! })
 }
 
-function getUsers(): Record<string, string> {
-  return {
-    [process.env.AUDREY_PHONE!]: 'Audrey',
-    [process.env.LUKA_PHONE!]: 'Luka',
+function getHardcodedUsers(): Record<string, string> {
+  const users: Record<string, string> = {}
+  if (process.env.AUDREY_PHONE) users[process.env.AUDREY_PHONE] = 'Audrey'
+  if (process.env.LUKA_PHONE) users[process.env.LUKA_PHONE] = 'Luka'
+  return users
+}
+
+async function resolveUser(supabase: ReturnType<typeof getSupabase>, phone: string): Promise<string> {
+  const hardcoded = getHardcodedUsers()
+  if (hardcoded[phone]) return hardcoded[phone]
+
+  // Look up registered users by phone in auth metadata
+  const { data } = await supabase.auth.admin.listUsers()
+  if (data?.users) {
+    const match = data.users.find(u => u.user_metadata?.phone === phone)
+    if (match) {
+      return match.user_metadata?.name || match.email?.split('@')[0] || match.email || 'User'
+    }
   }
+  return 'Unknown'
 }
 
 function twimlResponse(message: string) {
@@ -82,13 +97,12 @@ async function summarizePlayerWithClaude(
 export async function POST(req: NextRequest) {
   const supabase = getSupabase()
   const anthropic = getAnthropic()
-  const USERS = getUsers()
   const formData = await req.formData()
   const body = Object.fromEntries(formData.entries())
 
   const incomingMsg = body.Body as string
   const fromNumber = body.From as string
-  const loggedBy = USERS[fromNumber] || 'Unknown'
+  const loggedBy = await resolveUser(supabase, fromNumber)
 
   const { data: existingPlayers } = await supabase
     .from('poker_players')

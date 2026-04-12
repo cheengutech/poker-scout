@@ -7,20 +7,48 @@ import Link from 'next/link'
 export default function SignupPage() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [phone, setPhone] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const [success, setSuccess] = useState(false)
   const supabase = createClient()
 
+  function formatPhone(value: string) {
+    const digits = value.replace(/\D/g, '')
+    if (digits.length <= 3) return digits
+    if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`
+  }
+
+  function handlePhoneChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const formatted = formatPhone(e.target.value)
+    setPhone(formatted)
+  }
+
+  function toE164(formatted: string): string {
+    const digits = formatted.replace(/\D/g, '')
+    return digits.length === 10 ? `+1${digits}` : `+${digits}`
+  }
+
   async function handleSignup(e: React.FormEvent) {
     e.preventDefault()
     setError('')
+
+    const digits = phone.replace(/\D/g, '')
+    if (digits.length < 10) {
+      setError('Please enter a valid 10-digit phone number.')
+      return
+    }
+
     setLoading(true)
 
     const { error } = await supabase.auth.signUp({
       email,
       password,
-      options: { emailRedirectTo: `${window.location.origin}/auth/callback` },
+      options: {
+        emailRedirectTo: `${window.location.origin}/auth/callback`,
+        data: { phone: toE164(phone) },
+      },
     })
 
     if (error) {
@@ -58,6 +86,9 @@ export default function SignupPage() {
               <p className="text-sm text-gray-500">
                 We sent a confirmation link to <strong className="text-gray-900">{email}</strong>.
               </p>
+              <p className="text-sm text-gray-400 mt-2">
+                Once confirmed, we&apos;ll text you everything you need to get started.
+              </p>
             </div>
           ) : (
             <form onSubmit={handleSignup} className="space-y-4">
@@ -80,6 +111,22 @@ export default function SignupPage() {
                   className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-300 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all"
                   placeholder="you@example.com"
                 />
+              </div>
+
+              <div>
+                <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1.5">
+                  Phone number
+                </label>
+                <input
+                  id="phone"
+                  type="tel"
+                  value={phone}
+                  onChange={handlePhoneChange}
+                  required
+                  className="w-full bg-gray-50 border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-900 placeholder:text-gray-300 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none transition-all"
+                  placeholder="(555) 123-4567"
+                />
+                <p className="text-[11px] text-gray-400 mt-1">We&apos;ll text you a welcome guide after you confirm your email.</p>
               </div>
 
               <div>
